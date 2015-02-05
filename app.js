@@ -24,8 +24,12 @@ var http = require('http').Server(app);
 
 app.set('port', (process.env.PORT || 3000));
 
-http.listen(app.get('port'), function(){
-  console.log('listening on ' + app.get('port'));
+// http.listen(app.get('port'), function(){
+//   console.log('listening on ' + app.get('port'));
+// });
+
+http.listen(3000, function(){
+  console.log(3000);
 });
 
 
