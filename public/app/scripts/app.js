@@ -21,7 +21,7 @@ angular.module('tour2App', [
     'ngTouch',
     'ui.router',
     'uiGmapgoogle-maps',
-    'mongolabResourceHttp',
+    //'mongolabResourceHttp',
     'ui.bootstrap',
     'ui.select',
     'dialogs.main',
