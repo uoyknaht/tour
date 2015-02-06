@@ -29,11 +29,7 @@ module.exports = function(grunt) {
     //     // ignorePath:  /\.\.\//
     //   }
     // },    
-    copy: {   
-      indexHtml: {
-        src: appConfig.rootPath + '/views/index.ejs',
-        dest: appConfig.distPath + '/index.ejs'
-      },    
+    copy: {       
       views: {
         expand: true,
         cwd: appConfig.appPath + '/views',
@@ -42,14 +38,14 @@ module.exports = function(grunt) {
       }     
     }, 
     useminPrepare: {
-      html: appConfig.rootPath + '/views/index.ejs',
+      html: appConfig.appPath + '/views/index.ejs',
       options: {
         root: appConfig.rootPath + '/public',
         dest: appConfig.distPath
       }      
     },
     usemin: {
-      html: [appConfig.distPath + '/index.ejs']
+      html: [appConfig.distPath + '/views/index.ejs']
     },
     filerev: {
       dist: {
@@ -63,7 +59,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'copy:indexHtml',
     'copy:views',
     'useminPrepare',
     'concat',
@@ -71,7 +66,6 @@ module.exports = function(grunt) {
     'uglify',
     'filerev',
     'usemin'
-
   ]);
 
 };

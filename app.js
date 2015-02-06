@@ -1,3 +1,8 @@
+// to start: 
+// SET NODE_ENV=production // for the first time
+// NODE_ENV=production node app.js
+// console.log(process.env.NODE_ENV);
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -24,18 +29,20 @@ var http = require('http').Server(app);
 
 app.set('port', (process.env.PORT || 3000));
 
-// http.listen(app.get('port'), function(){
-//   console.log('listening on ' + app.get('port'));
-// });
-
 http.listen(3000, function(){
-  console.log(3000);
+  console.log('port: 3000, environment: ' + app.get('env'));
 });
 
+var viewsPath;
 
+if (app.get('env') === 'production') {
+    viewsPath = '/public/dist/views';
+} else {
+    viewsPath = '/public/app/views';
+}
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
+// app.set('views', path.join(__dirname, '/public/app/views'));
+app.set('views', path.join(__dirname, viewsPath));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
@@ -45,6 +52,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+
+
 
 app.use('/', routes);
 app.use('/users', users);
@@ -76,7 +88,7 @@ var uriUtil = require('mongodb-uri');
  */
 var options = { 
     server: { 
-            socketOptions: { 
+        socketOptions: { 
         keepAlive: 1, connectTimeoutMS: 30000 
         } 
     }, 
@@ -120,7 +132,7 @@ conn.once('open', function() {
 
 // development error handler
 // will print stacktrace
-if (app.get('env') === 'development') {
+if (app.get('env') === 'development') {    
     app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
